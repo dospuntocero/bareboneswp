@@ -6,11 +6,11 @@
 	</div>
 	<nav class="navigation" role="navigation">
         <ul>
-		    <?php wp_nav_menu( [
-		            'theme_location' => 'main-navigation',
-                    'container' => '',
-                    'items_wrap' => '%3$s'
-		    ] ); ?>
+	    <?php wp_nav_menu( [
+		 'theme_location' => 'main-navigation',
+		 'container' => '',
+		 'items_wrap' => '%3$s'
+	    ] ); ?>
         </ul>
 	</nav>
 
