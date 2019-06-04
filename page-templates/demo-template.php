@@ -8,7 +8,7 @@ get_header();
 
 <main role="main" <?php post_class(); ?>>
 	<section>
-		<article class="post-404">
+		<article>
 
 			<h1><?php the_title( ); ?></h1>
 			<?php the_content(); ?>
