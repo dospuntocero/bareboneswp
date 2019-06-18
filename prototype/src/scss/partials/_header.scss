@@ -1,0 +1,72 @@
+.brand {
+    display: inline-block;
+}
+
+header {
+    left: 0;
+    padding: 1em 0;
+    position: fixed;
+    text-align: left;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+#nav-toggle {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    outline: none;
+    position: absolute;
+    right: .5em;
+    top: .75rem;
+    z-index: 1001;
+}
+
+nav {
+    left: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: .5em 0;
+    position: absolute;
+    text-transform: uppercase;
+    transition: width .5s ease-out;
+    top: 0;
+    width: 0;
+    z-index: 1;
+    ul {
+        list-style-type: none;
+        margin: 1em;
+        padding: 0;
+        li {
+            transition: margin .3s linear;
+            a {
+                display: block;
+                padding: 1em;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+.show-nav {
+    width: 100vw;
+}
+
+
+
+
+// Position 'fixed' is a unicorn on mobile devices.
+// Mobile requires 'absolute', so we need to figure out
+// whether or not this is a mobile device WITHOUT
+// device detection. So we narrow down the chances
+// by detecting screen width / is touch enabled / and
+// whether or not the primary pointer is fine or not.
+
+// Pointer can be none, fine or coarse
+// NOTE: Firefox as of 2019 STILL does not support
+// (pointer: x) you STILL need to use a -moz prefix!
+@media (min-width: 48em), (-moz-touch-enabled: 1) and (pointer: fine) {
+
+}

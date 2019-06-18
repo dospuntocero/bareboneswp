@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: $rem-base;
+    scroll-behavior: smooth;
+}
+
+body {
+    color: $primary;
+    font-family: sans-serif;
+    font-size: $rem-base;
+    font-weight: 400;
+    margin: 0;
+}
+
+a,
+button,
+input,
+textarea,
+select,
+option {
+    outline: none;
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {margin: 0;}
+
+.wrapper {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.responsive {
+    height: auto;
+    max-width: 100%;
+}
