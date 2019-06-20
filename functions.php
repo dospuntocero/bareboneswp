@@ -35,7 +35,7 @@ if (function_exists('add_theme_support'))
 	Functions
 \*------------------------------------*/
 
-register_nav_menus([ 
+register_nav_menus([
 	'main-menu' => __('Header Menu', 'bboneswp'), // Main Menu
 	'footer-menu' => __('Footer Menu', 'bboneswp') // Footer Menu
 ]);
@@ -144,12 +144,51 @@ remove_filter('the_excerpt', 'wpautop'); // Remove <p> tags from Excerpt altoget
 \*------------------------------------*/
 
 function basetheme_theme_scripts() {
-	// wp_enqueue_script( 'foundation-js', '/wp-content/themes/accessnurse/assets/js/lib/foundation.min.js', array( 'jquery' ), '1.9.0', true );
-	// wp_enqueue_script( 'slick-js', '/wp-content/themes/accessnurse/assets/js/lib/slick.min.js', array( 'jquery' ), '1.9.0', true );
-	// wp_enqueue_script( 'waypoints', '/wp-content/themes/accessnurse/assets/js/lib/waypoints.min.js', array( 'jquery' ), '4.0.1', false );
-	// wp_enqueue_script( 'jquery-modal-video', '/wp-content/themes/accessnurse/assets/js/lib/jquery-modal-video.min.js', array( 'jquery' ), '1.9.0', true );
-	// wp_enqueue_script( 'isotope', '/wp-content/themes/accessnurse/assets/js/lib/isotope.js', array( 'jquery' ), '3.0.6', true );
-	// wp_enqueue_script( 'imagesloaded', '/wp-content/themes/accessnurse/assets/js/lib/imagesloaded.js', array( 'jquery' ), '', true );
+    /*
+    wp_enqueue_script(
+        'foundation-js',
+        get_template_directory_uri().'/assets/js/lib/foundation.6.5.1.min.js',
+        array( 'jquery' ),
+        '6.5.1',
+        true
+    );
+    */
+    /*
+    wp_enqueue_script(
+        'font-awesome-js',
+        get_template_directory_uri().'/assets/js/lib/font-awesome-all.5.9.0.min.js',
+        array( 'jquery' ),
+        '5.9.0',
+        true
+    );
+    */
+    /*
+    wp_enqueue_script(
+        'slick-js',
+        get_template_directory_uri().'/assets/js/lib/slick.1.9.0.min.js',
+        array( 'jquery' ),
+        '1.9.0',
+        true
+    );
+    */
+    /*
+    wp_enqueue_script(
+        'jquery-modal-video-js',
+        get_template_directory_uri().'/assets/js/lib/jquery-modal-video.2.4.1.min.js',
+        array( 'jquery' ),
+        '2.4.1',
+        true
+    );
+    */
+    /*
+    wp_enqueue_script(
+        'isotope-js',
+        get_template_directory_uri().'/assets/js/lib/isotope.3.0.6.min.js',
+        array( 'jquery' ),
+        '3.0.6',
+        true
+    );
+    */
 
 	// Theme scripts
 	$theme_js = '/assets/js/app.js';

@@ -1,0 +1,47 @@
+// Set sitewide defaults
+@import "partials/settings";
+
+// LIBRARIES
+// Custom Foundation 6.5.1 with: Normalize XY-Grid, Accordion, Responsive Accordion, Tabs, Reveal Modal, Equalizer and none of the other crap!
+// @import "partials/foundation";
+// @import "partials/isotope";
+// @import "partials/slick";
+// @import "partials/modal-video";
+
+// User defined input (blog, single pages, etc.)
+@import "partials/user-styles";
+
+@import "partials/common";
+@import "partials/header";
+@import "partials/footer";
+
+
+// >= 640 (Foundation == Medium)
+@media (min-width: 40em) {
+
+}
+
+// >= 768
+@media (min-width: 48em) {
+
+}
+
+// >= 960
+@media (min-width: 60em) {
+
+}
+
+// >= 1024 (Foundation == Large)
+@media (min-width: 64em) {
+
+}
+
+// >= 1104
+@media (min-width: 69em) {
+
+}
+
+// >= 1200
+@media (min-width: 75em) {
+
+}
