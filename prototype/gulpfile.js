@@ -2,7 +2,7 @@
  * - - - - - - - - - - EDIT YOUR PATHS
  * - - - - - - - - - - - - - - - - - -
  */
-let paths = {
+const paths = {
         styles: {
             watch   : 'src/scss/**/*.scss',
             dest    : '../assets/css/'
@@ -20,6 +20,9 @@ let paths = {
         images: {
             watch   : 'src/img/**/*',
             dest    : '../assets/img/'
+        },
+        data: {
+            src     : 'src/data/data.json'
         },
         url: {
             dev     : 'http://MYSITE/wp-content/themes/MYTHEME/prototype/dest'
@@ -40,19 +43,22 @@ let paths = {
  * - - - - - - - - - - - - - - - - - - - - -
  */
 
-let prefix      = require ('gulp-autoprefixer'),
-    beeper      = require ('beeper'),
-    browserSync = require ('browser-sync').create (),
-    changed     = require ('gulp-changed'),
-    colors      = require ('ansi-colors'),
-    gulp        = require ('gulp'),
-    log         = require ('fancy-log'),
-    njkRend     = require ('gulp-nunjucks-render'),
-    plumber     = require ('gulp-plumber'),
-    reload      = browserSync.reload ,
-    sass        = require ('gulp-sass'),
-    sourcemaps  = require ('gulp-sourcemaps'),
-    uglify      = require ('gulp-uglify');
+const prefix      = require('gulp-autoprefixer');
+const beeper      = require('beeper');
+const browserSync = require('browser-sync').create ();
+const changed     = require('gulp-changed');
+const colors      = require('ansi-colors');
+const data        = require('gulp-data');
+const fse         = require('fs-extra');
+const gulp        = require('gulp');
+const log         = require('fancy-log');
+const njkRend     = require('gulp-nunjucks-render');
+const normal      = require('node-normalize-scss');
+const plumber     = require('gulp-plumber');
+const reload      = browserSync.reload;
+const sass        = require('gulp-sass');
+const sourcemaps  = require('gulp-sourcemaps');
+const uglify      = require('gulp-uglify');
 
 
 
@@ -74,7 +80,7 @@ function onError(err) {
     beeper(2);
 };
 
-// Create a new proxy server to view dest.
+// Create a new proxy server to view dist.
 function server() {
     browserSync.init ({
        proxy  : paths.url.dev,
@@ -89,7 +95,10 @@ function style(env) {
     if (env !== true) {
         return gulp.src(paths.styles.watch)
         .pipe(sourcemaps.init())
-        .pipe(sass({'outputStyle':'expanded'}))
+        .pipe(sass({
+            includePaths: normal.includePaths,
+            outputStyle: 'expanded'
+        }))
         .pipe(plumber({
               errorHandler : onError
           }))
@@ -98,18 +107,21 @@ function style(env) {
             flexbox: true
         }))
         .pipe(sourcemaps.write('./')) //maps are set relative to source
-        .pipe(gulp.dest(paths.styles.dest))
+        .pipe(gulp.dest(paths.styles.dist))
         .pipe(browserSync.stream());
     } else {
         return gulp.src(paths.styles.watch)
         .pipe(sourcemaps.init())
-        .pipe(sass({'outputStyle':'compressed'}))
+        .pipe(sass({
+            includePaths: normal.includePaths,
+            outputStyle: 'compressed'
+        }))
         .pipe(sourcemaps.write('./')) //maps are set relative to source
-        .pipe(gulp.dest(paths.styles.dest));
+        .pipe(gulp.dest(paths.styles.dist));
     }
 }
 
-// Save JavaScript to dest and reload browser.
+// Save JavaScript to dist and reload browser.
 // 'production' task will uglify final JavaScript output.
 function script(env) {
     if (env !== true) {
@@ -117,36 +129,36 @@ function script(env) {
         .pipe(plumber({
               errorHandler : onError
           }))
-        .pipe(gulp.dest(paths.scripts.dest))
+        .pipe(gulp.dest(paths.scripts.dist))
         .pipe(browserSync.stream());
     } else {
         return gulp.src(paths.scripts.watch)
         .pipe(uglify())
-        .pipe(gulp.dest(paths.scripts.dest));
+        .pipe(gulp.dest(paths.scripts.dist));
     }
 }
 
 // Compile HTML on nunjuck change and reload proxy server.
 function page() {
     return gulp.src(paths.pages.render)
-    // .pipe(data(function(file){
-    //     return JSON.parse(fse.readFileSync('./src/data/data.json'))
-    // } ) )
+    .pipe(data(function(file){
+        return JSON.parse(fse.readFileSync('./src/data/data.json'))
+    }))
     .pipe(njkRend({
         path:[paths.pages.compile]
     }))
     .pipe(plumber ({
         errorHandler : onError
     }))
-    .pipe(gulp.dest(paths.pages.dest))
+    .pipe(gulp.dest(paths.pages.dist))
     .pipe(browserSync.stream());
 }
 
 // Images
 function image() {
     return gulp.src(paths.images.watch)
-    .pipe(changed(paths.images.dest))
-    .pipe(gulp.dest(paths.images.dest))
+    .pipe(changed(paths.images.dist))
+    .pipe(gulp.dest(paths.images.dist))
     .pipe(browserSync.stream());
 }
 
@@ -174,7 +186,6 @@ function watch() {
  */
 
 // Render production ready assets
-// `gulp production`
 gulp.task('production', function(done) {
     style(true);
     script(true);
@@ -183,8 +194,6 @@ gulp.task('production', function(done) {
     done();
 });
 
-// Run as default in development
-// `gulp`
 gulp.task('default', function() {
     style();
     script();
@@ -192,4 +201,5 @@ gulp.task('default', function() {
     image();
     server();
     watch();
+    beeper();
 });
