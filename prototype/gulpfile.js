@@ -15,7 +15,7 @@ const paths = {
             watch   : 'src/pages/**/**/*.njk',  // files to watch (include all partials)
             compile : 'src/pages/templates',    // template used to compile with
             render  : 'src/pages/*njk',         // pages to render (don't render partials)
-            dest    : 'dest/'
+            dest    : 'dist/'
         },
         images: {
             watch   : 'src/img/**/*',
@@ -25,7 +25,7 @@ const paths = {
             src     : 'src/data/data.json'
         },
         url: {
-            dev     : 'http://MYSITE/wp-content/themes/MYTHEME/prototype/dest'
+            dev     : 'http://MYSITE/wp-content/themes/MYTHEME/prototype/dist'
         }
     };
 
@@ -107,7 +107,7 @@ function style(env) {
             flexbox: true
         }))
         .pipe(sourcemaps.write('./')) //maps are set relative to source
-        .pipe(gulp.dest(paths.styles.dist))
+        .pipe(gulp.dest(paths.styles.dest))
         .pipe(browserSync.stream());
     } else {
         return gulp.src(paths.styles.watch)
@@ -117,7 +117,7 @@ function style(env) {
             outputStyle: 'compressed'
         }))
         .pipe(sourcemaps.write('./')) //maps are set relative to source
-        .pipe(gulp.dest(paths.styles.dist));
+        .pipe(gulp.dest(paths.styles.dest));
     }
 }
 
@@ -129,12 +129,12 @@ function script(env) {
         .pipe(plumber({
               errorHandler : onError
           }))
-        .pipe(gulp.dest(paths.scripts.dist))
+        .pipe(gulp.dest(paths.scripts.dest))
         .pipe(browserSync.stream());
     } else {
         return gulp.src(paths.scripts.watch)
         .pipe(uglify())
-        .pipe(gulp.dest(paths.scripts.dist));
+        .pipe(gulp.dest(paths.scripts.dest));
     }
 }
 
@@ -150,15 +150,15 @@ function page() {
     .pipe(plumber ({
         errorHandler : onError
     }))
-    .pipe(gulp.dest(paths.pages.dist))
+    .pipe(gulp.dest(paths.pages.dest))
     .pipe(browserSync.stream());
 }
 
 // Images
 function image() {
     return gulp.src(paths.images.watch)
-    .pipe(changed(paths.images.dist))
-    .pipe(gulp.dest(paths.images.dist))
+    .pipe(changed(paths.images.dest))
+    .pipe(gulp.dest(paths.images.dest))
     .pipe(browserSync.stream());
 }
 
